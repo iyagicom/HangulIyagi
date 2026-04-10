@@ -32,8 +32,9 @@ HangulIyagi는 이 문제를 해결하기 위해
 
 ## 특징 (핵심 차별점)
 
-- 노린은 기존 한글 입력기와 입력 방식 자체가 다르다.
-- 편안한 진짜 한글 입력기로 마지막 글짜까지 검색에서 인식한다
+<span style="color:red;">노린은 기존 한글 입력기와 입력 방식 자체가 다르다</span><br>
+<span style="color:blue;">- 편안한 진짜 한글 입력기</span><br>
+<span style="color:purple;">- 마지막 글자까지 검색에서 인식</span>
 ---
 
 ### ⚡ 완성형 직출력 입력
