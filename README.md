@@ -160,27 +160,26 @@ HangulIyagi는 이 문제를 해결하기 위해
 
 ### 2. 설치
 
-chmod +x hanguliyagi  
-sudo cp hanguliyagi /usr/local/bin/
+
+
 
 ---
 
 ### 3. 실행
 
-hanguliyagi --daemon
+
 
 ---
 
 ### 4. 자동 시작 등록
 
-~/.config/autostart/hanguliyagi.desktop 생성
+
 
 ---
 
 ### 5. 사용
 
-- 실행 후 즉시 입력 가능
-- 단축키로 한/영 전환
+  
 
 ---
 
@@ -198,7 +197,6 @@ Backspace | 삭제
 
 ## 제거
 
-sudo rm /usr/local/bin/hanguliyagi
 
 ---
 
