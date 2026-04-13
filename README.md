@@ -159,45 +159,95 @@ HangulIyagi는 이 문제를 해결하기 위해
 
 ### 1. 다운로드
 
-릴리즈에서 파일 다운로드:
+GitHub 릴리즈에서 파일 3개를 다운로드:
 
-- hanguliyagi
+| 파일 | 설명 |
+|------|------|
+| `hanguliyagi` | 입력기 데몬 (IBus 불필요, 자체 D-Bus 구현) |
+| `im-hanguliyagi.so` | GTK3 IM 모듈 |
+| `libim-hanguliyagi.so` | GTK4 IM 모듈 |
 
 ---
 
 ### 2. 설치
 
+터미널에서 다운로드 폴더로 이동 후 실행:
 
+```bash
+# 데몬 실행 파일
+sudo cp hanguliyagi /usr/local/bin/
+sudo chmod +x /usr/local/bin/hanguliyagi
 
+# GTK3 IM 모듈
+GTK3_IM=$(pkg-config --variable=libdir gtk+-3.0)/gtk-3.0/3.0.0/immodules
+sudo mkdir -p "$GTK3_IM"
+sudo cp im-hanguliyagi.so "$GTK3_IM/"
+sudo gtk-query-immodules-3.0 --update-cache
+
+# GTK4 IM 모듈
+GTK4_IM=$(pkg-config --variable=libdir gtk4)/gtk-4.0/4.0.0/immodules
+sudo mkdir -p "$GTK4_IM"
+sudo cp libim-hanguliyagi.so "$GTK4_IM/"
+```
 
 ---
 
-### 3. 실행
+### 3. 환경변수 설정
 
+`~/.profile` 또는 `~/.bashrc` 에 추가:
 
+```bash
+export GTK_IM_MODULE=hanguliyagi
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=hanguliyagi
+```
+
+적용:
+
+```bash
+source ~/.profile
+```
 
 ---
 
-### 4. 사용
+### 4. 실행
 
-  
+로그아웃 후 다시 로그인하면 자동 시작됩니다.
+
+수동 실행:
+
+```bash
+hanguliyagi &
+```
 
 ---
 
 ## 사용 방법
 
-키 | 동작
----|---
-한/영 키 | 전환
-Shift+Space | 전환
-우측 Alt | 전환
-Shift+자음 | 쌍자음
-Backspace | 삭제
+| 키 | 동작 |
+|----|------|
+| 한/영 키 | 한영 전환 |
+| Shift+Space | 한영 전환 |
+| 우측 Alt | 한영 전환 |
+| Shift+자음 | 쌍자음 입력 |
+| Backspace | 글자 단위 삭제 |
 
 ---
 
 ## 제거
 
+```bash
+sudo rm /usr/local/bin/hanguliyagi
+
+GTK3_IM=$(pkg-config --variable=libdir gtk+-3.0)/gtk-3.0/3.0.0/immodules
+sudo rm "$GTK3_IM/im-hanguliyagi.so"
+sudo gtk-query-immodules-3.0 --update-cache
+
+GTK4_IM=$(pkg-config --variable=libdir gtk4)/gtk-4.0/4.0.0/immodules
+sudo rm "$GTK4_IM/libim-hanguliyagi.so"
+```
+
+`~/.profile` 에서 환경변수 3줄 제거 후 로그아웃/로그인.
 
 ---
 
