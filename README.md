@@ -198,8 +198,8 @@ hanguliyagi-manager
 ### 방법 1. .deb 패키지 (Ubuntu / Debian 계열)
 
 ```bash
-sudo dpkg -i hanguliyagi_1.1.0_amd64.deb
-```
+1. 파일관리자에서 소프트웨어로 설치
+2. sudo dpkg -i hanguliyagi_1.1.0_amd64.deb```
 
 설치 후 입력기 선택:
 
