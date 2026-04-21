@@ -1,4 +1,4 @@
-# HangulIyagi 노린 (Norin) v1.1
+# HangulIyagi 노린 (Norin) v1.1.0
 
 노린(Norin)은 순수 우리말의 의미를 담은 독자적인 한글 입력기다.  
 기존 입력기와 전혀 다른 구조로 설계된 새로운 입력 시스템이다.
@@ -143,116 +143,39 @@ HangulIyagi는 이 문제를 해결하기 위해
 
 - Linux (GNOME, KDE)
 - Wayland / X11
-- GTK3 / GTK4 / Qt6 / Chrome
+- GTK3 / GTK4 / Qt6 / Chrome / Tilix 등 GTK 앱 / XIM (터미널, Wine)
 
 ---
 
 ## 기능
 
-- 두벌식 한글 입력 (자체 엔진)
+- 두벌식 한글 입력 (자체 엔진, libibus 없음)
 - 한/영 전환 (한/영키, Shift+Space, 우측 Alt)
 - 쌍자음 입력 (Shift+자음)
+- CapsLock 상태에서 쌍자음 입력 방지 (ㄲ→ㄱ 등 정상 처리)
 - 포커스 변경 시 자동 입력 확정
 - 빠른 키 단위 삭제
-- 단어 후보 창 (4자 이상 자동 학습)
-- 사용자 사전 관리자 (`hanguliyagi-manager`)
+- 단어 후보 창 (타이핑 중 자동 완성)
+- 영문 모드에서도 후보 단어 표시
+- 사용자 사전 자동 학습 (설정 글자 수 이상 단어)
+- 사용자 사전 SQLite 저장 (`~/.config/IYAGI-INC/HangulIyagi/hanguliyagi.db`)
+- 관리자 창 (`hanguliyagi-manager`)
 
 ---
 
-## 설치
-
-### 1. 다운로드
-
-GitHub 릴리즈에서 파일을 다운로드한다.
-
-| 파일 | 설명 |
-|------|------|
-| `hanguliyagi` | 입력기 데몬 |
-| `hanguliyagi-manager` | 관리자 창 |
-| `im-hanguliyagi.so` | GTK3 IM 모듈 |
-| `libim-hanguliyagi.so` | GTK4 IM 모듈 |
-| `hanguliyagi.xml` | IBus 엔진 등록 파일 |
-| `25_hanguliyagi.conf` | im-config 설정 |
-| `25_hanguliyagi.rc` | im-config 환경변수 |
-| `hanguliyagi.service` | systemd 서비스 |
-
----
-
-### 2. 파일 복사
+## 관리자 창 설정
 
 ```bash
-# 실행 파일
-sudo cp hanguliyagi /usr/local/bin/
-sudo cp hanguliyagi-manager /usr/local/bin/
-
-# GTK3 IM 모듈
-GTK3_IM=$(pkg-config --variable=libdir gtk+-3.0)/gtk-3.0/3.0.0/immodules
-sudo mkdir -p "$GTK3_IM"
-sudo cp im-hanguliyagi.so "$GTK3_IM/"
-sudo gtk-query-immodules-3.0 --update-cache
-
-# GTK4 IM 모듈
-GTK4_IM=$(pkg-config --variable=libdir gtk4)/gtk-4.0/4.0.0/immodules
-sudo mkdir -p "$GTK4_IM"
-sudo cp libim-hanguliyagi.so "$GTK4_IM/"
-
-# IBus 엔진 등록
-sudo cp hanguliyagi.xml /usr/share/ibus/component/
-
-# im-config 등록
-sudo cp 25_hanguliyagi.conf /usr/share/im-config/data/
-sudo cp 25_hanguliyagi.rc /usr/share/im-config/data/
+hanguliyagi-manager
 ```
 
----
-
-### 3. systemd 서비스 등록
-
-```bash
-mkdir -p ~/.config/systemd/user
-cp hanguliyagi.service ~/.config/systemd/user/
-systemctl --user daemon-reload
-systemctl --user enable hanguliyagi
-```
-
----
-
-### 4. 입력기 선택 (im-config)
-
-**HangulIyagi 선택:**
-
-```bash
-im-config -n hanguliyagi
-```
-
-**다른 입력기로 변경 (비교 테스트 등):**
-
-```bash
-im-config -n fcitx      # fcitx로 변경
-im-config -n fcitx5     # fcitx5로 변경
-im-config -n ibus       # ibus로 변경
-im-config -n uim        # uim으로 변경
-```
-
-변경 후 **로그아웃 → 다시 로그인**하면 선택한 입력기가 적용된다.
-
-현재 선택된 입력기 확인:
-
-```bash
-cat ~/.xinputrc
-```
-
-GUI로 선택하려면:
-
-```bash
-im-config
-```
-
----
-
-### 5. 로그인
-
-로그아웃 후 다시 로그인하면 HangulIyagi가 자동 시작된다.
+| 설정 | 설명 | 기본값 |
+|------|------|--------|
+| 후보 단어 창 | 타이핑 중 후보 표시 ON/OFF | ON |
+| 후보 단어 최대 개수 | 1~10개 | 10 |
+| 후보선택키 Shift 함께 | Shift+숫자로 선택 | OFF (숫자만) |
+| 사전 자동저장 최소 글자수 | 3~5자 | 4자 |
+| 사용자 사전 | 단어 추가/삭제/전체 삭제 | - |
 
 ---
 
@@ -266,46 +189,85 @@ im-config
 | Shift+자음 | 쌍자음 입력 |
 | Backspace | 글자 단위 삭제 |
 | 숫자 1~9, 0 | 후보 단어 선택 |
+| Escape | 후보 창 닫기 |
 
-### 관리자 창
+---
+
+## 설치
+
+### 방법 1. .deb 패키지 (Ubuntu / Debian 계열)
 
 ```bash
-hanguliyagi-manager
+sudo dpkg -i hanguliyagi_1.1.0_amd64.deb
 ```
 
-- 후보 단어 창 ON/OFF
-- 사용자 사전 추가/삭제/전체 삭제
+설치 후 입력기 선택:
+
+```bash
+im-config -n hanguliyagi
+```
+
+로그아웃 후 다시 로그인하면 적용된다.
+
+---
+
+### 방법 2. ZIP (Fedora, Arch, openSUSE 등 모든 배포판)
+
+```bash
+unzip hangulIyagi-v1.1.0-linux-x64.zip
+cd hangulIyagi-v1.1.0-linux-x64
+./install.sh
+```
+
+설치 후:
+
+```bash
+im-config -n hanguliyagi
+```
+
+로그아웃 후 다시 로그인.
+
+---
+
+### 입력기 전환
+
+```bash
+im-config -n hanguliyagi   # HangulIyagi
+im-config -n fcitx         # fcitx
+im-config -n ibus          # ibus
+```
+
+현재 선택 확인:
+
+```bash
+cat ~/.xinputrc
+```
 
 ---
 
 ## 제거
 
+### .deb로 설치한 경우
+
 ```bash
-sudo rm /usr/local/bin/hanguliyagi
-sudo rm /usr/local/bin/hanguliyagi-manager
-sudo rm /usr/share/ibus/component/hanguliyagi.xml
-sudo rm /usr/share/im-config/data/25_hanguliyagi.conf
-sudo rm /usr/share/im-config/data/25_hanguliyagi.rc
+sudo dpkg -r hanguliyagi
+```
 
-GTK3_IM=$(pkg-config --variable=libdir gtk+-3.0)/gtk-3.0/3.0.0/immodules
-sudo rm "$GTK3_IM/im-hanguliyagi.so"
-sudo gtk-query-immodules-3.0 --update-cache
+### ZIP으로 설치한 경우
 
-GTK4_IM=$(pkg-config --variable=libdir gtk4)/gtk-4.0/4.0.0/immodules
-sudo rm "$GTK4_IM/libim-hanguliyagi.so"
-
-systemctl --user disable hanguliyagi
-rm ~/.config/systemd/user/hanguliyagi.service
+```bash
+sudo ./uninstall.sh
 ```
 
 다른 입력기로 전환 후 로그아웃/로그인:
 
 ```bash
-im-config -n fcitx
+im-config -n ibus
 ```
 
 ---
 
 ## 개발
 
-IYAGI INC
+IYAGI INC  
+https://github.com/iyagicom/HangulIyagi
