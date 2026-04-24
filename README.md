@@ -1,4 +1,4 @@
-# HangulIyagi 노린 (Norin) v1.1.0
+# HangulIyagi 노린 (Norin) v1.2.0
 
 노린(Norin)은 순수 우리말의 의미를 담은 독자적인 한글 입력기다.  
 기존 입력기와 전혀 다른 구조로 설계된 새로운 입력 시스템이다.
@@ -141,9 +141,17 @@ HangulIyagi는 이 문제를 해결하기 위해
 
 ## 지원 환경
 
-- Linux (GNOME, KDE)
-- Wayland / X11
-- GTK3 / GTK4 / Qt6 / Chrome / Tilix 등 GTK 앱 / XIM (터미널, Wine)
+- **Ubuntu 22.04 / 24.04** — 완전 테스트 완료
+- **Fedora / openSUSE / Arch** 등 — install.sh 지원, 동작 여부 미검증
+- GNOME, KDE, XFCE 등 주요 데스크탑
+- X11 / Wayland
+- **GTK3** / **GTK4** / **Qt6** / **Qt5** (5.13 ~ 5.15) / **XIM** (터미널, Wine)
+- Chrome, Tilix 등 GTK 앱
+
+### Qt5 앱 지원 (v1.2.0 신규)
+
+번들 Qt5를 사용하는 서드파티 앱(GStarCAD 등)에도 플러그인 직접 연결 가능.  
+Qt 버전별로 독립 빌드된 플러그인 제공 (`libhanguliyagi-qt5.14.so` 등).
 
 ---
 
@@ -174,8 +182,12 @@ hanguliyagi-manager
 | 후보 단어 창 | 타이핑 중 후보 표시 ON/OFF | ON |
 | 후보 단어 최대 개수 | 1~10개 | 10 |
 | 후보선택키 Shift 함께 | Shift+숫자로 선택 | OFF (숫자만) |
+| 후보창 위치 | 커서 아래 / 커서 위 | 커서 아래 |
 | 사전 자동저장 최소 글자수 | 3~5자 | 4자 |
+| IM 연결 방식 | GTK / Qt 자체 | GTK |
 | 사용자 사전 | 단어 추가/삭제/전체 삭제 | - |
+
+> **IM 연결 방식 변경 후 로그아웃 → 재로그인 필요**
 
 ---
 
@@ -198,8 +210,8 @@ hanguliyagi-manager
 ### 방법 1. .deb 패키지 (Ubuntu / Debian 계열)
 
 ```bash
-1. 파일관리자에서 소프트웨어로 설치
-2. sudo dpkg -i hanguliyagi_1.1.0_amd64.deb```
+sudo dpkg -i hanguliyagi_1.2.0_amd64.deb
+```
 
 설치 후 입력기 선택:
 
@@ -211,21 +223,42 @@ im-config -n hanguliyagi
 
 ---
 
-### 방법 2. ZIP (Fedora, Arch, openSUSE 등 모든 배포판)
+### 방법 2. ZIP (Fedora, Arch, openSUSE 등)
 
 ```bash
-unzip hangulIyagi-v1.1.0-linux-x64.zip
-cd hangulIyagi-v1.1.0-linux-x64
+unzip hangulIyagi-v1.2.0-linux-x64.zip
+cd hangulIyagi-v1.2.0-linux-x64
 ./install.sh
 ```
 
-설치 후:
+`im-config`가 없는 배포판(Fedora, Arch 등)에서는 install.sh가 자동으로  
+환경변수를 설정합니다:
 
-```bash
-im-config -n hanguliyagi
-```
+- **Wayland**: `~/.config/environment.d/90-hanguliyagi.conf`
+- **X11**: `~/.xprofile`
 
 로그아웃 후 다시 로그인.
+
+> Ubuntu/Debian 외 배포판은 동작 여부가 미검증입니다.
+
+---
+
+### Qt5 앱에 직접 연결 (선택, Qt 자체 방식)
+
+Qt 자체 방식을 선택하거나, Qt5 앱 실행 스크립트에서 직접 설정:
+
+```bash
+export QT_IM_MODULE=hanguliyagi
+# XIM 이중 입력 방지
+unset XMODIFIERS
+```
+
+Qt5 버전별 플러그인을 앱의 `platforminputcontexts/` 디렉토리에 설치:
+
+```bash
+# Qt5.14 앱 예시 (GStarCAD 2026 등)
+cp libhanguliyagi-qt5.14.so /앱경로/qtplugins/platforminputcontexts/libhanguliyagi.so
+```
 
 ---
 
@@ -264,6 +297,27 @@ sudo ./uninstall.sh
 ```bash
 im-config -n ibus
 ```
+
+---
+
+## 변경 이력
+
+### v1.2.0
+- Qt5 플러그인 지원 (Qt5.13 ~ 5.15, 버전별 독립 빌드)
+- Qt5 앱 직접 연결 방식: QKeyEvent 기반으로 완전 재설계
+- Qt6 / Qt5 플러그인 소스 완전 분리
+- 관리자 창: IM 연결 방식 설정 추가
+- 관리자 창: 후보창 위치 설정 추가
+- 관리자 창: IM 변경 시 재로그인 안내 추가
+- 관리자 창: 설명 텍스트 가독성 개선
+- install.sh: Fedora / Arch 등 비 Debian 배포판 지원 (environment.d / xprofile 자동 설정)
+- install.sh: gtk-query-immodules, qmake 경로 다중 탐색으로 호환성 향상
+
+### v1.1.0
+- 단어 후보 창 기능 추가
+- 영문 모드 후보 단어 지원
+- 사용자 사전 SQLite 저장
+- GTK4 IM 모듈 추가
 
 ---
 
