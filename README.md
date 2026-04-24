@@ -209,17 +209,28 @@ hanguliyagi-manager
 
 ### 방법 1. .deb 패키지 (Ubuntu / Debian 계열)
 
+`hanguliyagi_1.2.0_amd64.deb` 파일을 **파일 관리자에서 더블클릭**하면 설치된다.
+
+또는 터미널에서:
+
 ```bash
 sudo dpkg -i hanguliyagi_1.2.0_amd64.deb
 ```
 
 설치 후 입력기 선택:
 
+1. **설정 → 시스템 → 언어 및 지원 → 설치된 언어 관리** 열기
+2. 하단 **키보드 입력기** 항목에서 **HangulIyagi** 선택
+3. 리부팅 (로그아웃 후 다시 로그인 안될 가능성 확인됨)
+
+또는 터미널에서:
+
 ```bash
 im-config -n hanguliyagi
 ```
 
-로그아웃 후 다시 로그인하면 적용된다.
+> 설치 후 `hanguliyagi-manager`를 실행하면 후보 단어 창, 입력 방식 등  
+> 세부 설정을 확인하고 조정할 수 있다.
 
 ---
 
@@ -262,22 +273,6 @@ cp libhanguliyagi-qt5.14.so /앱경로/qtplugins/platforminputcontexts/libhangul
 
 ---
 
-### 입력기 전환
-
-```bash
-im-config -n hanguliyagi   # HangulIyagi
-im-config -n fcitx         # fcitx
-im-config -n ibus          # ibus
-```
-
-현재 선택 확인:
-
-```bash
-cat ~/.xinputrc
-```
-
----
-
 ## 제거
 
 ### .deb로 설치한 경우
@@ -292,11 +287,8 @@ sudo dpkg -r hanguliyagi
 sudo ./uninstall.sh
 ```
 
-다른 입력기로 전환 후 로그아웃/로그인:
-
-```bash
-im-config -n ibus
-```
+다른 입력기로 전환 후 로그아웃/로그인.  
+(**설정 → 시스템 → 언어 및 지원 → 설치된 언어 관리 → 키보드 입력기**)
 
 ---
 
