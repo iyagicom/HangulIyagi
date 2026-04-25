@@ -201,8 +201,8 @@ hanguliyagi-manager
 | Shift+자음 | 쌍자음 입력 |
 | Backspace | 글자 단위 삭제 |
 | 숫자 1~9, 0 | 후보 단어 선택 |
+| Ctrl+숫자  | 숫자 후보때 숫자 넣기|
 | Escape | 후보 창 닫기 |
-
 ---
 
 ## 설치
