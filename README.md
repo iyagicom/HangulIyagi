@@ -301,7 +301,7 @@ sudo ./uninstall.sh
 - KiCad 등 wxWidgets 앱 한글 입력 지원
 - Chrome Wayland 한글 입력 복원 (D-Bus IBus 연결 구조 개선)
 
-### v1.2.1 이전 (v1.2.0)
+### v1.2.0
 - Qt5 플러그인 지원 (Qt5.13 ~ 5.15, 버전별 독립 빌드)
 - Qt5 앱 직접 연결 방식: QKeyEvent 기반으로 완전 재설계
 - Qt6 / Qt5 플러그인 소스 완전 분리
