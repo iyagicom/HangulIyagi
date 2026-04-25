@@ -1,4 +1,4 @@
-# HangulIyagi 노린 (Norin) v1.2.0
+# HangulIyagi 노린 (Norin) v1.2.1
 
 노린(Norin)은 순수 우리말의 의미를 담은 독자적인 한글 입력기다.  
 기존 입력기와 전혀 다른 구조로 설계된 새로운 입력 시스템이다.
@@ -148,7 +148,7 @@ HangulIyagi는 이 문제를 해결하기 위해
 - **GTK3** / **GTK4** / **Qt6** / **Qt5** (5.13 ~ 5.15) / **XIM** (터미널, Wine)
 - Chrome, Tilix 등 GTK 앱
 
-### Qt5 앱 지원 (v1.2.0 신규)
+### Qt5 앱 지원 (v1.2.1 신규)
 
 번들 Qt5를 사용하는 서드파티 앱(GStarCAD 등)에도 플러그인 직접 연결 가능.  
 Qt 버전별로 독립 빌드된 플러그인 제공 (`libhanguliyagi-qt5.14.so` 등).
@@ -203,18 +203,19 @@ hanguliyagi-manager
 | 숫자 1~9, 0 | 후보 단어 선택 |
 | Ctrl+숫자  | 숫자 후보때 숫자 넣기|
 | Escape | 후보 창 닫기 |
+
 ---
 
 ## 설치
 
 ### 방법 1. .deb 패키지 (Ubuntu / Debian 계열)
 
-`hanguliyagi_1.2.0_amd64.deb` 파일을 **파일 관리자에서 더블클릭**하면 설치된다.
+`hanguliyagi_1.2.1_amd64.deb` 파일을 **파일 관리자에서 더블클릭**하면 설치된다.
 
 또는 터미널에서:
 
 ```bash
-sudo dpkg -i hanguliyagi_1.2.0_amd64.deb
+sudo dpkg -i hanguliyagi_1.2.1_amd64.deb
 ```
 
 설치 후 입력기 선택:
@@ -237,8 +238,8 @@ im-config -n hanguliyagi
 ### 방법 2. ZIP (Fedora, Arch, openSUSE 등)
 
 ```bash
-unzip hangulIyagi-v1.2.0-linux-x64.zip
-cd hangulIyagi-v1.2.0-linux-x64
+unzip hangulIyagi-v1.2.1-linux-x64.zip
+cd hangulIyagi-v1.2.1-linux-x64
 ./install.sh
 ```
 
@@ -294,7 +295,13 @@ sudo ./uninstall.sh
 
 ## 변경 이력
 
-### v1.2.0
+### v1.2.1
+- GTK3 터미널: Shift+쌍자음(ㅃ ㅉ ㄸ ㄲ ㅆ) 입력 오류 수정
+- CapsLock 상태에서 쌍자음 방지 유지
+- KiCad 등 wxWidgets 앱 한글 입력 지원
+- Chrome Wayland 한글 입력 복원 (D-Bus IBus 연결 구조 개선)
+
+### v1.2.1 이전 (v1.2.0)
 - Qt5 플러그인 지원 (Qt5.13 ~ 5.15, 버전별 독립 빌드)
 - Qt5 앱 직접 연결 방식: QKeyEvent 기반으로 완전 재설계
 - Qt6 / Qt5 플러그인 소스 완전 분리
