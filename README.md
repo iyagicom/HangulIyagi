@@ -281,56 +281,6 @@ sudo ./uninstall.sh
 
 ---
 
-## 변경 이력
-
-### v1.2.5
-- D-Bus `Properties.Get` 크래시 수정 → Wine KakaoTalk XIM 한글 끊김 해결
-- GTK4 IM 모듈 undefined symbol 수정 (`config_get_toggle_extra_key`) — GNOME Software 크래시 해결
-- GTK4 IM 모듈 한글 풀어쓰기 수정 (`pending_backspaces` delete-surrounding 처리)
-- GTK4 IM 모듈 첫 자음 깨짐 수정 (`preedit-start`/`preedit-end` 신호 추가)
-- VTE 터미널 첫 자음 preedit 초기화 개선 (focus_in → 실제 키 입력 시점으로 이동)
-- GNOME 소프트웨어 앱 이름 '한글이야기'로 변경
-- 패키징 시 metainfo.xml 버전 자동 동기화
-
-### v1.2.4
-- GNOME 입력 소스 목록에서 한글이야기 노출 방지 (D-Bus `ListEngines` 빈 응답)
-- 관리자 후보 단어 공백 자동추가 설정 변경 시 즉시 반영 (재시작 불필요)
-- 사용자 단어 저장 시 앞뒤 공백 자동 제거
-
-### v1.2.3
-- XIM 전송 순서 수정 — KiCad `.` 입력 시 커서 점프 해결
-- XIM 전송 순서 수정 — Wine에서 `~` → `` ` `` 오출력 해결
-
-### v1.2.2
-- 사용자 정의 추가 전환 키 설정 (기본: 우측 Alt, 변경 가능)
-- 관리자 창 "키 설정" 탭 추가
-- 관리자 키 캡처 버그 수정 — 수정자 키(Ctrl, Shift 등) 단독 등록 방지
-- D-Bus 서버 오른쪽 Alt 하드코딩 → config 연동으로 수정
-- Qt6 후보창 FileIyagi 검색창에서 사라지지 않는 버그 수정
-
-### v1.2.1
-- GTK3 터미널: Shift+쌍자음(ㅃ ㅉ ㄸ ㄲ ㅆ) 입력 오류 수정
-- CapsLock 상태에서 쌍자음 방지 유지
-- KiCad 등 wxWidgets 앱 한글 입력 지원
-- Chrome Wayland 한글 입력 복원 (D-Bus IBus 연결 구조 개선)
-
-### v1.2.0
-- Qt5 플러그인 지원 (Qt5.13 ~ 5.15, 버전별 독립 빌드)
-- Qt5 앱 직접 연결 방식: QKeyEvent 기반으로 완전 재설계
-- Qt6 / Qt5 플러그인 소스 완전 분리
-- 관리자 창: IM 연결 방식 설정 추가
-- 관리자 창: 후보창 위치 설정 추가
-- 관리자 창: IM 변경 시 재로그인 안내 추가
-- install.sh: Fedora / Arch 등 비 Debian 배포판 지원
-
-### v1.1.0
-- 단어 후보 창 기능 추가
-- 영문 모드 후보 단어 지원
-- 사용자 사전 SQLite 저장
-- GTK4 IM 모듈 추가
-
----
-
 ## 개발
 
 IYAGI INC  
