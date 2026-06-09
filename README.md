@@ -208,6 +208,7 @@ hanguliyagi-manager
 | 숫자 1~9, 0 | 후보 단어 선택 |
 | Ctrl+숫자 | 숫자 후보일 때 숫자 직접 입력 |
 | Escape | 후보 창 닫기 |
+| CapsLock | 영타 한글로 바꾸기 |
 
 ---
 
