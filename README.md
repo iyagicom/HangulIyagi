@@ -289,7 +289,7 @@ sudo ./uninstall.sh
 
 ### v1.6.0
 - **GTK4 VTE 터미널 이중출력 수정**: Ptyxis 등 GTK4 터미널에서 "아안녀녕하핫하세셍세요" 현상 해결 — VTE 버전 런타임 감지로 분기 처리
-- **Google Docs 한글 이중출력 수정**: hangul_simple 전체 preedit 방식으로 교체 — delete_surrounding 불필요
+- **Google Docs 한글 이중출력**: 미해결
 - **Chrome 한글 이중출력 수정**: D-Bus 경로 hangul_simple 통일
 - **deb 업그레이드 후 키보드 먹통 방지**: postinst/prerm 처리 개선
 - **Qt6 환경변수 추가**: `QT_IM_MODULES=hanguliyagi` — Qt 6.7+ 환경에서 시스템 설정 덮어쓰기 방지
